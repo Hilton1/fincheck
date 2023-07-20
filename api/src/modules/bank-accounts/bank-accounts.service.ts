@@ -1,15 +1,30 @@
+import { BankAccountsRepository } from './../../shared/database/repositories/bank-accounts.repositories';
 import { Injectable } from '@nestjs/common';
 import { CreateBankAccountDto } from './dto/create-bank-account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank-account.dto';
 
 @Injectable()
 export class BankAccountsService {
+  constructor(private readonly bankAccountsRepo: BankAccountsRepository) {}
+
   create(userId: string, createBankAccountDto: CreateBankAccountDto) {
-    return { userId, createBankAccountDto };
+    const { color, initialBalance, name, type } = createBankAccountDto;
+
+    return this.bankAccountsRepo.create({
+      data: {
+        userId,
+        color,
+        initialBalance,
+        name,
+        type,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all bankAccounts`;
+  findAllByUserId(userId: string) {
+    return this.bankAccountsRepo.findMany({
+      where: { userId },
+    });
   }
 
   findOne(id: number) {
