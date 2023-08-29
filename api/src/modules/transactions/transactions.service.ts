@@ -14,11 +14,22 @@ export class TransactionsService {
   ) {}
 
   async create(userId: string, createTransactionDto: CreateTransactionDto) {
-    const { bankAccountId, categoryId } = createTransactionDto;
+    const { bankAccountId, categoryId, date, name, type, value } =
+      createTransactionDto;
 
     await this.validateEntitiesOwneship({ userId, bankAccountId, categoryId });
 
-    return 'Deve criar a Transaction.';
+    return this.transactionsRepo.create({
+      data: {
+        userId,
+        bankAccountId,
+        categoryId,
+        date,
+        name,
+        type,
+        value,
+      },
+    });
   }
 
   findAllByUserId(userId: string) {
