@@ -18,6 +18,7 @@ export function useLoginController() {
   const {
     register,
     handleSubmit: hookFormHandleSubmit,
+    formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
@@ -26,5 +27,5 @@ export function useLoginController() {
     console.log('Chama a API com:', data)
   });
 
-  return { handleSubmit, register };
+  return { handleSubmit, register, errors };
 }
