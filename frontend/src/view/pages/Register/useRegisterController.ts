@@ -1,6 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from "zod";
+import { useMutation } from '@tanstack/react-query';
+
+import { authService } from '../../../app/services/authService';
+import { SignupParams } from '../../../app/services/authService/signup';
 
 const schema = z.object({
   name: z.string().
@@ -26,10 +30,22 @@ export function useRegisterController() {
     resolver: zodResolver(schema),
   });
 
-
-  const handleSubmit = hookFormHandleSubmit((data) => {
-    console.log('Chama a API com:', data)
+  const { mutateAsync, isLoading } = useMutation({
+    mutationFn: async (data: SignupParams) => {
+      return authService.signup(data)
+    },
   });
+
+  const handleSubmit = hookFormHandleSubmit(async (data) => {
+    try {
+      const { accessToken } = await mutateAsync(data);
+      console.log({ accessToken });
+    } catch {
+      alert('Ocorreu um erro ao criar sua conta');
+    }
+  });
+
+  console.log({ isLoading });
 
   return { handleSubmit, register, errors }
 }
