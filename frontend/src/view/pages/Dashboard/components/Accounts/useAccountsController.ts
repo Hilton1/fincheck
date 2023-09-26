@@ -16,6 +16,7 @@ export function useAccountController() {
     setSliderState,
     windowWidth,
     areValuesVisible,
-    toggleValueVisibility
+    toggleValueVisibility,
+    isLoading: false,
   }
 }
