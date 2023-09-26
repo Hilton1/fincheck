@@ -30,7 +30,7 @@ export function AccountCard({ color, name, balance, type }: AccountCardProps) {
         <span
           className={cn(
             'text-gray-800 font-medium tracking-[-0.5px] mt-4 block',
-            areValuesVisible && 'blur-sm',
+            !areValuesVisible && 'blur-sm',
           )}>
           {formatCurrency(balance)}
         </span>
