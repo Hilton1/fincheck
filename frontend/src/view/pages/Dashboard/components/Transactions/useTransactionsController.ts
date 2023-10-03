@@ -7,6 +7,6 @@ export function useTransactionsControler() {
     areValuesVisible,
     transactions: [],
     isInitialLoading: false,
-    isLoading: true,
+    isLoading: false,
   };
 }
